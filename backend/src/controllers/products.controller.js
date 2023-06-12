@@ -16,8 +16,13 @@ const getProductById = async (req, res) => {
 };
 const createProduct = async (req, res) => {
   const { name } = req.body;
-  const createdProduct = await productService.createProduct(name);
-  return res.status(201).json(createdProduct.result);
+  const result = await productService.create({ name });
+  
+  if (!result) {
+    return res.status(404).json({ message: 'Product not found' });
+  }
+  
+  return res.status(201).json(result);
 };
 
 module.exports = {
