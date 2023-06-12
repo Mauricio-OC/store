@@ -3,7 +3,7 @@ const sinon = require('sinon');
 
 const productModel = require('../../../src/models/product.model');
 const productService = require('../../../src/services/product.service');
-const { productsList } = require('../mocks/products.mocks');
+const { productsList, updatedProduct } = require('../mocks/products.mocks');
 
 describe('product Service', function () {
   afterEach(function () {
@@ -30,5 +30,11 @@ describe('product Service', function () {
     const result = await productService.getProductById(1);
     expect(getByIdStub).to.be.calledOnceWith(1);
     expect(result).to.be.deep.equal(false);
+  });
+
+  it('deve adicionar um novo produto', async function () {
+    sinon.stub(productService, 'createProduct').resolves(updatedProduct);
+    const result = await productService.createProduct({ name: 'ProdutoX' });
+    expect(result).to.be.deep.equal(updatedProduct);
   });
 });

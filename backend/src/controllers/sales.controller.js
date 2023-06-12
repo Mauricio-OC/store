@@ -25,16 +25,16 @@ const getSalesById = async (req, res) => {
   }
 };
 
-// const createNewSales = async (req, res) => {
-//   const listProducts = req.body;
+const createNewSales = async (req, res) => {
+  const listProducts = req.body;
 
-//   try {
-//     const { result } = await salesService.createNewSales(listProducts);
-//     return res.status(201).json(result);
-//   } catch (error) {
-//     return res.status(500).json({ message: 'Internal Server Error' });
-//   }
-// };
+  try {
+    const { result } = await salesService.createNewSales(listProducts);
+    return res.status(201).json(result);
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
 
 // const deleteSale = async (req, res) => {
 //   const { id } = req.params;
@@ -54,5 +54,6 @@ const getSalesById = async (req, res) => {
 
 module.exports = { 
   getAllSales,
-  getSalesById, 
+  getSalesById,
+  createNewSales,
 };

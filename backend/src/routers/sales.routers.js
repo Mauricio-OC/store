@@ -9,4 +9,7 @@ salesProducts.route('/')
 salesProducts.route('/:id')
   .get(controller.getSalesById);
 
+  salesProducts.route('/:id')
+  .post(controller.createNewSales);
+
 module.exports = salesProducts;

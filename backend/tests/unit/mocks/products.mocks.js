@@ -22,7 +22,7 @@ const mockGetById = [
 
 const updatedProduct = {
   id: 4,
-  name: 'Vacina',
+  name: 'ProdutoX',
 };
 
 module.exports = {

@@ -11,15 +11,17 @@ const getProductById = async (id) => {
   const [[product]] = await connection.execute(query, [id]);
   return product;
 };
+const INSERT_PRODUCT_QUERY = 'INSERT INTO products (name) VALUES (?)';
 
+const createProduct = async (name) => {
+  const [{ insertId }] = await connection.execute(INSERT_PRODUCT_QUERY, [name]);
+  return { id: insertId, name };
+};
 module.exports = {
   getAllProducts,
   getProductById,
+  createProduct,
 };
-// const createProduct = async (name) => {
-//   const [{ insertId }] = await connection.execute('INSERT INTO products (name) VALUE (?)', [name]);
-//   return { id: insertId, name };
-// };
 
 // const deleteProduct = async (id) => {
 //   const query = 'DELETE FROM StoreManager.products WHERE id = ?';

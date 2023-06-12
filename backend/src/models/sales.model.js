@@ -19,22 +19,22 @@ const getSalesById = async (id) => {
   return result;
 };
 
-// const newSalesProducts = async (product) => {
-//   const SQL_INSERT_SALES = 'INSERT INTO StoreManager.sales () VALUES ()';
-//   const SQL_INSERT_SALES_PRODUCTS = `INSERT INTO StoreManager.sales_products (
-//     sale_id, product_id, quantity) VALUES (?, ?, ?)`;
+const newSalesProducts = async (product) => {
+  const SQL_INSERT_SALES = 'INSERT INTO StoreManager.sales () VALUES ()';
+  const SQL_INSERT_SALES_PRODUCTS = `INSERT INTO StoreManager.sales_products (
+    sale_id, product_id, quantity) VALUES (?, ?, ?)`;
 
-//   const [result] = await connection.execute(SQL_INSERT_SALES);
-//   const { insertId } = result;
+  const [result] = await connection.execute(SQL_INSERT_SALES);
+  const { insertId } = result;
 
-//   const createNewSales = product.map(async ({ productId, quantity }) => {
-//     await connection.execute(SQL_INSERT_SALES_PRODUCTS, [insertId, productId, quantity]);
-//   });
+  const createNewSales = product.map(async ({ productId, quantity }) => {
+    await connection.execute(SQL_INSERT_SALES_PRODUCTS, [insertId, productId, quantity]);
+  });
 
-//   await Promise.all(createNewSales);
+  await Promise.all(createNewSales);
 
-//   return { id: insertId, itemsSold: product };
-// };
+  return { id: insertId, itemsSold: product };
+};
 
 // const deleteSale = async (id) => {
 //   const SQL = 'DELETE FROM StoreManager.sales WHERE id = ?';
@@ -45,4 +45,5 @@ const getSalesById = async (id) => {
 module.exports = {
   getAllSales,
   getSalesById,
+  newSalesProducts,
 };

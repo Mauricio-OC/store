@@ -12,18 +12,18 @@ const getSalesById = async (id) => {
   }
   return sales;
 };
+const createSales = async (product) => {
+  const saleId = await salesModel.newSalesProducts(product);
+  if (saleId) {
+    return { type: 201, result: saleId };
+  }
+};
 
 module.exports = {
   getAllSales,
   getSalesById,
+  createSales,
 };
-
-// const createNewSales = async (product) => {
-//   const saleId = await salesModel.newSalesProducts(product);
-//   if (saleId) {
-//     return { type: 201, result: saleId };
-//   }
-// };
 
 // const deleteSale = async (id) => {
 //   const verifySale = await getById(id);
@@ -33,8 +33,3 @@ module.exports = {
 //   await salesModel.deleteSale(id);
 //   return { message: 'done' };
 // };
-
-module.exports = { 
-  getAllSales,
-  getSalesById,
-};

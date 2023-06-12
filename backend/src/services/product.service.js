@@ -12,18 +12,19 @@ const getProductById = async (id) => {
   }
   return product;
 };
+const createProduct = async (product) => {
+  const insert = await productModel.createProduct(product);
+  return { type: 201, result: insert };
+};
 
 module.exports = {
   getAllProducts,
   getProductById,
+  createProduct,
 };
-// const createProduct = async (product) => {
-//   const insert = await listProducts.createProduct(product);
-//   return { result: insert };
-// };
 
 // const deleteProduct = async (id) => {
-//   const verifyProduct = await listProducts.getById(id);
+//   const verifyProduct = await producModel.getById(id);
 //   console.log(verifyProduct);
 //   if (verifyProduct === undefined) {
 //     return false;
