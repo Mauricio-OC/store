@@ -1,19 +1,33 @@
-const productModel = require('../models/products.model');
+const productModel = require('../models/product.model');
 
-const getAll = async () => {
-  const result = await productModel.getAll();
-  return result;
+const getAllProducts = async () => {
+  const products = await productModel.getAllProducts();
+  return products;
 };
 
-const findById = async (id) => {
-  const result = await productModel.findById(id);
-  if (!result) {
+const getProductById = async (id) => {
+  const product = await productModel.getProductById(id);
+  if (!product) {
     return false;
   }
-  return result;
+  return product;
 };
 
 module.exports = {
-  getAll,
-  findById,
+  getAllProducts,
+  getProductById,
 };
+// const createProduct = async (product) => {
+//   const insert = await listProducts.createProduct(product);
+//   return { result: insert };
+// };
+
+// const deleteProduct = async (id) => {
+//   const verifyProduct = await listProducts.getById(id);
+//   console.log(verifyProduct);
+//   if (verifyProduct === undefined) {
+//     return false;
+//   }
+//   await listProducts.deleteProduct(id);
+//   return true;
+// };
