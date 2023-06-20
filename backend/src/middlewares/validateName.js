@@ -1,24 +1,15 @@
-const validateProductName = (req, res, next) => {
-  const { name } = req.body;
+const middleId = (result) => result !== 'erro';
 
-  if (!name) {
-    return res.status(400).json({ message: '"name" is required' });
-  }
-
-  next();
+const middleName = (name) => {
+if (!name) return { type: 400, message: '"name" is required' };
+if (name.length < 5) {
+ return { 
+  type: 422, message: '"name" length must be at least 5 characters long', 
 };
-
-const validateNameLength = (req, res, next) => {
-  const { name } = req.body;
-
-  if (name.length < 5) {
-    return res.status(422).json({ message: '"name" length must be at least 5 characters long' });
-  }
-
-  next();
+} return { type: 200, message: 'ok' }; 
 };
 
 module.exports = {
-  validateProductName,
-  validateNameLength,
+  middleId,
+  middleName,
 };

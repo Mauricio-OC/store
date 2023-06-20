@@ -1,64 +1,35 @@
-const salesModel = require('../models/sales.model');
+const productsModel = require('../models/product.model');
 
-const validateQuantities = (req, res, next) => {
-  const listProducts = req.body;
-  const isQuantityMissing = listProducts.some((elem) => typeof elem.quantity !== 'number');
-
-  if (isQuantityMissing) {
-    return res.status(400).json({
-      message: '"quantity" is required',
-    });
-  }
-
-  next();
-};
-
-const validateProductExists = async (req, res, next) => {
-  const listProducts = req.body;
-  const allProductExistsPromises = listProducts.map(async (product) => {
-    const productExists = await salesModel.getSalesById(product.productId);
-    return !!productExists;
-  });
-
-  const resultsAllProducts = await Promise.all(allProductExistsPromises);
-  const allProductExists = resultsAllProducts.every(Boolean);
-
-  if (!allProductExists) {
-    return res.status(404).json({ message: 'Product not found' });
-  }
-
-  next();
-};
-
-const validateProductIds = async (req, res, next) => {
-  const { body } = req;
-  const areProductIdsPresent = body.every(({ productId }) => typeof productId !== 'undefined');
-
-  if (!areProductIdsPresent) {
-    return res.status(400).json({ message: '"productId" is required' });
-  }
-  try {
-    await validateProductExists(req, res, next);
-  } catch (error) {
-    return res.status(404).json({ message: 'Product not found' });
+const middleId = (data) => {
+  if (data.length !== 0) {
+    return true;
   }
 };
 
-const validateQuantityGreaterThanZero = (req, res, next) => {
-  const listProducts = req.body;
-  const isQuantityValid = listProducts
-    .some(({ quantity }) => quantity !== undefined && quantity >= 1);
-
-  if (!isQuantityValid) {
-    return res.status(422).json({ message: '"quantity" must be greater than or equal to 1' });
+const middleSales = async (sale) => {
+  const promises = [];
+  for (let i = 0; i < sale.length; i += 1) {
+    const promise = productsModel.getByIdProduct(sale[i].productId);
+    promises.push(promise);
   }
-
-  next();
+  const results = await Promise.all(promises);
+  return !results.includes('erro');
 };
+
+const middleSaleQtd = async (sale) => {
+  if (sale.some((s) => !s.productId)) return { type: 400, message: '"productId" is required' };
+  if (sale.some((s) => +s.quantity <= 0)) {
+    return { type: 422, message: '"quantity" must be greater than or equal to 1' }; 
+   }
+  if (sale.some((s) => !s.quantity)) return { type: 400, message: '"quantity" is required' };
+  const results = await middleSales(sale);
+  if (!results) {
+    return { type: 404, message: 'Product not found' }; 
+  } return { type: 200, message: 'ok' };
+  };
 
 module.exports = {
-  validateQuantities,
-  validateProductIds,
-  validateProductExists,
-  validateQuantityGreaterThanZero,
+  middleId,
+  middleSaleQtd,
+  middleSales,
 };

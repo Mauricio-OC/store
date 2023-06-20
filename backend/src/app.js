@@ -3,8 +3,8 @@ const productsRouter = require('./routers/products.routers');
 const salesRouter = require('./routers/sales.routers');
 
 const app = express();
-app.use(express.json());
 
+app.use(express.json());
 app.use('/products', productsRouter);
 app.use('/sales', salesRouter);
 

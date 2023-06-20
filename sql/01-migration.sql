@@ -1,3 +1,4 @@
+-- Active: 1678120335687@@127.0.0.1@3306@StoreManager
 DROP DATABASE IF EXISTS StoreManager;
 
 CREATE DATABASE StoreManager;

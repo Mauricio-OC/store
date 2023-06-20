@@ -1,28 +1,11 @@
 const express = require('express');
+const saleController = require('../controllers/sales.controller');
 
-const salesProducts = express.Router();
-const controller = require('../controllers/sales.controller');
-const {
-  validateProductIds,
-  validateQuantities,
-  validateProductExists,
-  validateQuantityGreaterThanZero,
+const routes = express.Router();
+routes.get('/', saleController.getAllSale);
+routes.get('/:id', saleController.getByIdSale);
+routes.post('/', saleController.saleAdd);
+routes.delete('/:id', saleController.deleteSale);
+routes.put('/:saleId/products/:productId/quantity', saleController.updateSales);
 
-} = require('../middlewares/validateSales');
-
-salesProducts.route('/')
-  .get(controller.getAllSales);
-
-salesProducts.route('/:id')
-  .get(controller.getSalesById);
-
-  salesProducts.route(
-    '/:',
-  validateProductIds,
-   validateQuantities,
-    validateProductExists,
-     validateQuantityGreaterThanZero,
-     )
-  .post(controller.createNewSales);
-
-module.exports = salesProducts;
+module.exports = routes;
