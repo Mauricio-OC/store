@@ -1,7 +1,7 @@
 const productsModel = require('../models/product.model');
 
-const middleId = (data) => {
-  if (data.length !== 0) {
+const middleId = (result) => {
+  if (result.length !== 0) {
     return true;
   }
 };
